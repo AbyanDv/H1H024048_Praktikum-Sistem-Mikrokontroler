@@ -61,7 +61,7 @@ percepat = true; // reset ke fase percepatan
 
 Jawab :
 
-1.
+1. https://www.tinkercad.com/things/jzW3OVjzFlD-pertemuan-1-praktikum-sismik?sharecode=cZulcZdu-5LWgXwWYoFCszb-Ov3X0ICnXHGH5dvOeyw
 
 2. Program menggunakan for loop pertama dengan variabel ledPin yang dimulai dari nilai 2 dan bertambah satu setiap iterasi hingga mencapai 7. Pada setiap iterasi, pin yang aktif dinyalakan dengan digitalWrite(ledPin, HIGH), ditunggu selama timer milidetik, lalu dimatikan kembali dengan digitalWrite(ledPin, LOW) sebelum iterasi berpindah ke pin berikutnya. Hasilnya, LED menyala satu per satu dari kiri (Pin 2) ke kanan (Pin 7) secara berurutan.
 
