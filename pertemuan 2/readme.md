@@ -55,86 +55,86 @@ Jawab :
 const int segmentPins[8] = {7, 6, 5, 10, 11, 8, 9, 4};
 
 // Pin push button
-const int btnUp = 3; // tombol increment (tambah)
+const int btnUp   = 3; // tombol increment (tambah)
 const int btnDown = 2; // tombol decrement (kurang)
 
 // Pola digit 0-F untuk Common Anode
 byte digitPattern[16][8] = {
-{1,1,1,1,1,1,0,0}, //0
-{0,1,1,0,0,0,0,0}, //1
-{1,1,0,1,1,0,1,0}, //2
-{1,1,1,1,0,0,1,0}, //3
-{0,1,1,0,0,1,1,0}, //4
-{1,0,1,1,0,1,1,0}, //5
-{1,0,1,1,1,1,1,0}, //6
-{1,1,1,0,0,0,0,0}, //7
-{1,1,1,1,1,1,1,0}, //8
-{1,1,1,1,0,1,1,0}, //9
-{1,1,1,0,1,1,1,0}, //A
-{0,0,1,1,1,1,1,0}, //b
-{1,0,0,1,1,1,0,0}, //C
-{0,1,1,1,1,0,1,0}, //d
-{1,0,0,1,1,1,1,0}, //E
-{1,0,0,0,1,1,1,0} //F
+  {1,1,1,1,1,1,0,0}, //0
+  {0,1,1,0,0,0,0,0}, //1
+  {1,1,0,1,1,0,1,0}, //2
+  {1,1,1,1,0,0,1,0}, //3
+  {0,1,1,0,0,1,1,0}, //4
+  {1,0,1,1,0,1,1,0}, //5
+  {1,0,1,1,1,1,1,0}, //6
+  {1,1,1,0,0,0,0,0}, //7
+  {1,1,1,1,1,1,1,0}, //8
+  {1,1,1,1,0,1,1,0}, //9
+  {1,1,1,0,1,1,1,0}, //A
+  {0,0,1,1,1,1,1,0}, //b
+  {1,0,0,1,1,1,0,0}, //C
+  {0,1,1,1,1,0,1,0}, //d
+  {1,0,0,1,1,1,1,0}, //E
+  {1,0,0,0,1,1,1,0}  //F
 };
 
 // Counter saat ini (0-15)
 int currentDigit = 0;
 
 // State tombol sebelumnya untuk edge detection
-bool lastUpState = HIGH;
+bool lastUpState   = HIGH;
 bool lastDownState = HIGH;
 
 // Fungsi menampilkan digit ke seven segment
 void displayDigit(int num)
 {
-for (int i = 0; i < 8; i++)
-{
-// Logika dibalik karena Common Anode: segmen aktif = LOW
-digitalWrite(segmentPins[i], !digitPattern[num][i]);
-}
+  for (int i = 0; i < 8; i++)
+  {
+    // Logika dibalik karena Common Anode: segmen aktif = LOW
+    digitalWrite(segmentPins[i], !digitPattern[num][i]);
+  }
 }
 
 void setup()
 {
-// Set semua pin segmen sebagai OUTPUT
-for (int i = 0; i < 8; i++)
-{
-pinMode(segmentPins[i], OUTPUT);
-}
+  // Set semua pin segmen sebagai OUTPUT
+  for (int i = 0; i < 8; i++)
+  {
+    pinMode(segmentPins[i], OUTPUT);
+  }
 
-// Set tombol sebagai INPUT_PULLUP (tidak tekan = HIGH, tekan = LOW)
-pinMode(btnUp, INPUT_PULLUP);
-pinMode(btnDown, INPUT_PULLUP);
+  // Set tombol sebagai INPUT_PULLUP (tidak tekan = HIGH, tekan = LOW)
+  pinMode(btnUp,   INPUT_PULLUP);
+  pinMode(btnDown, INPUT_PULLUP);
 
-// Tampilkan nilai awal (0)
-displayDigit(currentDigit);
+  // Tampilkan nilai awal (0)
+  displayDigit(currentDigit);
 }
 
 void loop()
 {
-bool upState = digitalRead(btnUp);
-bool downState = digitalRead(btnDown);
+  bool upState   = digitalRead(btnUp);
+  bool downState = digitalRead(btnDown);
 
-// Deteksi tekan btnUp: transisi HIGH -> LOW
-if (lastUpState == HIGH && upState == LOW)
-{
-currentDigit++;
-if (currentDigit > 15) currentDigit = 0; // wrap dari F ke 0
-displayDigit(currentDigit);
-delay(200); // debounce sederhana
-}
+  // Deteksi tekan btnUp: transisi HIGH -> LOW
+  if (lastUpState == HIGH && upState == LOW)
+  {
+    currentDigit++;
+    if (currentDigit > 15) currentDigit = 0; // wrap dari F ke 0
+    displayDigit(currentDigit);
+    delay(200); // debounce sederhana
+  }
 
-// Deteksi tekan btnDown: transisi HIGH -> LOW
-if (lastDownState == HIGH && downState == LOW)
-{
-currentDigit--;
-if (currentDigit < 0) currentDigit = 15; // wrap dari 0 ke F
-displayDigit(currentDigit);
-delay(200); // debounce sederhana
-}
+  // Deteksi tekan btnDown: transisi HIGH -> LOW
+  if (lastDownState == HIGH && downState == LOW)
+  {
+    currentDigit--;
+    if (currentDigit < 0) currentDigit = 15; // wrap dari 0 ke F
+    displayDigit(currentDigit);
+    delay(200); // debounce sederhana
+  }
 
-// Simpan state sekarang untuk iterasi berikutnya
-lastUpState = upState;
-lastDownState = downState;
+  // Simpan state sekarang untuk iterasi berikutnya
+  lastUpState   = upState;
+  lastDownState = downState;
 }
